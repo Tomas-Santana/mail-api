@@ -8,10 +8,12 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-HOST_NAME = os.getenv("HOST_NAME")
+HOST_NAME = os.getenv("HOST_NAME", "")
+if not HOST_NAME:
+    raise ValueError("HOST_NAME must be set in .env")
 
 
-def login(request: Request) -> Response:
+def login(request: Request):
     try:
         login_request = LoginRequest.model_validate(request.json)
     except ValueError as e:
@@ -27,7 +29,7 @@ def login(request: Request) -> Response:
     user.mail_password = ""
     return jsonify({"token": token, "user": user.get_cleaned()}), 200
 
-def register(request: Request) -> Response:
+def register(request: Request):
     try:
         register_request = RegisterRequest.model_validate(request.json)
     except ValueError as e:
