@@ -1,9 +1,11 @@
 from pydantic import BaseModel, field_validator, EmailStr
+from typing import Optional, List
 
 class SendEmailRequest(BaseModel):
-    email: EmailStr
+    emails: List[EmailStr]
     subject: str
     body: str
+    reply_to: Optional[EmailStr] = None
     
     @field_validator("subject")
     def subject_must_not_be_empty(cls, value):

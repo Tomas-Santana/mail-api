@@ -2,7 +2,7 @@ import requests
 import dotenv
 import os
 
-dotenv.load_dotenv()
+dotenv.load_dotenv(override=True)
 
 class MailAdmin:
     def __init__(self):

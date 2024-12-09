@@ -5,9 +5,7 @@ import ssl
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
-
-
+load_dotenv(override=True)
 
 def fetch_email(request: Request, inbox: str):
     jwtUser = validate_token(request)

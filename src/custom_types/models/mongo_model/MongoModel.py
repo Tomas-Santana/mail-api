@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 from abc import ABC, abstractmethod
 # basemodel that has find, insert, update, delete methods
-load_dotenv()
+load_dotenv(override=True)
 client = MongoClient(os.getenv("MONGO_URI"))
 database = client[os.getenv("MONGO_DB")]
 class MongoModel(BaseModel, ABC):

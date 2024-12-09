@@ -7,7 +7,7 @@ from helpers.MailAdmin import MailAdmin
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+load_dotenv(override=True)
 HOST_NAME = os.getenv("HOST_NAME", "")
 if not HOST_NAME:
     raise ValueError("HOST_NAME must be set in .env")

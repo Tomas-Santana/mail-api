@@ -2,11 +2,17 @@ import logging
 from controllers.auth.login import login, register
 from controllers.mail.send_email import send_email
 from controllers.mail.read_email import fetch_email, mark_email
-from flask import Flask, request
+from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
+from dotenv import load_dotenv
+import os
+
+load_dotenv(override=True)
+
+print(os.getenv("HOST_NAME"))
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True, origins=["http://localhost:5173", "http://127.0.0.1:5000"])
 
 logging.getLogger('flask_cors').level = logging.DEBUG
 
@@ -18,7 +24,7 @@ def login_route():
 def register_route():
     return register(request)
 
-@cross_origin()
+@app.route("/mail/send", methods=["POST"])
 def send_email_route():
     return send_email(request)
 

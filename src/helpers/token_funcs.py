@@ -3,7 +3,7 @@ from jwt import decode, InvalidTokenError, encode
 from dotenv import load_dotenv
 import os
 from custom_types.models.User import User
-load_dotenv()
+load_dotenv(override=True)
 SECRET = os.getenv("JWT_SECRET")
 
 def get_user_from_token(token: str) -> JWTUser | None:

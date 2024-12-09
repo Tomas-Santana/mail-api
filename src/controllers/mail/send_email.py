@@ -5,7 +5,7 @@ from middleware.validate_token import validate_token
 from dotenv import load_dotenv
 import os
 import ssl
-load_dotenv()
+load_dotenv(override=True)
 
 
 def send_email(request: Request):
@@ -15,8 +15,9 @@ def send_email(request: Request):
     try:
         send_email_request = SendEmailRequest.model_validate(request.json)
     except ValueError as e:
+        print(e)
         return jsonify({"error": "invalid request"}), 400
     user_email = jwtUser.username + "@" + os.getenv("HOST_NAME", "")
     mail_client = MailClient(jwtUser.full_name, user_email, jwtUser.mail_password, ssl.create_default_context())
-    mail_client.send(send_email_request.email, send_email_request.subject, send_email_request.body)
+    mail_client.send(send_email_request.emails, send_email_request.subject, send_email_request.body, send_email_request.reply_to)
     return jsonify({"message": "Email sent"}), 200
